@@ -1,4 +1,4 @@
-package ginfx
+package gin
 
 import (
 	"context"
@@ -6,8 +6,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"gitlab.prilax.in/fxmodules/ginfx.git/config"
-	"gitlab.prilax.in/fxmodules/ginfx.git/middleware"
+	"github.com/pesleishangthem/gin/config"
+	"github.com/pesleishangthem/gin/middleware"
+	"github.com/rs/zerolog"
 	"go.uber.org/fx"
 )
 
@@ -50,16 +51,16 @@ var Module = fx.Module("ginfx",
 	}),
 )
 
-func NewGinEngine(cfg config.ServerConfig, v *middleware.Validator) *gin.Engine {
+func NewGinEngine(cfg config.ServerConfig, v *middleware.Validator, log zerolog.Logger) *gin.Engine {
 	gin.SetMode(cfg.GetMode())
 	r := gin.New()
 	// Disable the redirects that break CORS
 	r.RedirectTrailingSlash = false
 	r.RedirectFixedPath = false
-
-	r.Use(middleware.CORSMiddleware())
-	r.Use(middleware.RequestIDMiddleware())
-	r.Use(middleware.JWTMiddleware(v))
+	r.Use(middleware.RequestIDMiddleware(),
+		middleware.LogMiddleware(log),
+		middleware.CORSMiddleware(),
+		middleware.JWTMiddleware(v))
 	return r
 }
 

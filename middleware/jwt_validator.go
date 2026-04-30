@@ -5,7 +5,7 @@ import (
 
 	"github.com/MicahParks/keyfunc"
 	"github.com/golang-jwt/jwt/v4"
-	"gitlab.prilax.in/fxmodules/ginfx.git/config"
+	"github.com/pesleishangthem/gin/config"
 )
 
 type Validator struct {

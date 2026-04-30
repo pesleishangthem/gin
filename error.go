@@ -1,13 +1,13 @@
-package ginfx
+package gin
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.prilax.in/go/apperror.git"
-	"go.uber.org/zap"
+	"github.com/pesleishangthem/apperror"
+	"github.com/rs/zerolog"
 )
 
-func WriteError(log *zap.Logger, c *gin.Context, err error) {
-	log.Error("an error has been occurred", zap.Any("error", err.Error()))
+func WriteError(log zerolog.Logger, c *gin.Context, err error) {
+	log.Err(err)
 	if appErr, ok := err.(*apperror.AppError); ok {
 		switch appErr.Code {
 		case apperror.ErrValidation:
