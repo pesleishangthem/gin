@@ -20,7 +20,7 @@ type LogFields struct {
 	Error     string
 }
 
-func LogMiddleware(log zerolog.Logger) gin.HandlerFunc {
+func LogMiddleware(log *zerolog.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 		reqID := c.GetHeader(RequestIDKey)
@@ -38,7 +38,7 @@ func LogMiddleware(log zerolog.Logger) gin.HandlerFunc {
 	}
 }
 
-func LogRequest(log zerolog.Logger, f LogFields) {
+func LogRequest(log *zerolog.Logger, f LogFields) {
 	event := log.Info()
 	if f.Status >= 500 {
 		event = log.Error()

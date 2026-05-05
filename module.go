@@ -51,7 +51,7 @@ var Module = fx.Module("ginfx",
 	}),
 )
 
-func NewGinEngine(cfg config.ServerConfig, v *middleware.Validator, log zerolog.Logger) *gin.Engine {
+func NewGinEngine(cfg config.ServerConfig, v *middleware.Validator, log *zerolog.Logger) *gin.Engine {
 	gin.SetMode(cfg.GetMode())
 	r := gin.New()
 	// Disable the redirects that break CORS
