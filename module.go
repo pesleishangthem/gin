@@ -57,9 +57,10 @@ func NewGinEngine(cfg config.ServerConfig, v *middleware.Validator, log zerolog.
 	// Disable the redirects that break CORS
 	r.RedirectTrailingSlash = false
 	r.RedirectFixedPath = false
-	r.Use(middleware.RequestIDMiddleware(),
-		middleware.LogMiddleware(log),
+	r.Use(
 		middleware.CORSMiddleware(),
+		middleware.RequestIDMiddleware(),
+		middleware.LogMiddleware(log),
 		middleware.JWTMiddleware(v))
 	return r
 }
